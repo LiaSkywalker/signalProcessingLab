@@ -1,0 +1,5 @@
+numpy~=1.21.2
+matplotlib~=3.4.3
+scipy~=1.7.0
+nidaqmx~=0.5.7
+sounddevice~=0.4.3
