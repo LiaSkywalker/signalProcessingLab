@@ -9,5 +9,5 @@ You can download the installation from *[here](https://www.ni.com/en-il/support/
 
 ## Inside this repository
 * measurement_device.py: functions for measure data from NI-card
-* experiments.py: jupyter notebook for working in the lab.
+* experiments.ipynb: jupyter notebook for working in the lab.
     including code sections, and instructions for mandatory experiments
