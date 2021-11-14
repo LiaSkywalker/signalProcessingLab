@@ -23,10 +23,10 @@ def turn_off_led():
 
 def take_measurements(signal: np.ndarray, sampling_rate: float,offset=3.):
     """
-
+    connect to device, send given signal, and take measurements
     :param signal:
     :param sampling_rate:
-    :return:
+    :return: vals np.array of readed measurements
     """
     if device not in system.devices:
         vals = simulate_rx(simulate_tx(signal))
@@ -51,9 +51,9 @@ def take_measurements(signal: np.ndarray, sampling_rate: float,offset=3.):
     turn_off_led()
     return vals
 
-def take_measurements2(duration: float, sampling_rate: float): # todo not need
+def take_measurements2(duration: float, sampling_rate: float): #
     """
-
+    take measurements only
     :param signal:
     :param sampling_rate:
     :return:
@@ -91,7 +91,12 @@ def show_fft(array: np.ndarray, duration: int = 1):
 
 
 
-def distance(x1):  # todo: put in the notebook if I haven't yat
+def distance(x1):
+    """
+    # todo: put in the notebook if I haven't yat
+    :param x1:
+    :return:
+    """
     w = 570 #output frequency
     TimeInterval = 5 #time interval
     rate = 10000 #sampling rate
@@ -113,7 +118,11 @@ def distance(x1):  # todo: put in the notebook if I haven't yat
                      "rate": rate, "time": time(), "distance": dis, "filename": filename}, f)
 
 
-def noise():  # todo: put in the notebook if I haven't yat
+def noise():
+    """
+    # todo: put in the notebook if I haven't yat
+    :return:
+    """
     w = 570
     duration = 5
     rate = 10000
@@ -127,7 +136,13 @@ def noise():  # todo: put in the notebook if I haven't yat
                      "time": time(), "fileName": filename}, f)
 
 
-def song(filename, output_name="out.wav"):  # todo: put in the notebook if I haven't yat
+def song(filename, output_name="out.wav"):
+    """
+    # todo: put in the notebook if I haven't yat
+    :param filename:
+    :param output_name:
+    :return:
+    """
     sample_rate, data = wavfile.read(filename) #read song data
     data = np.array(data[:, 0] / (2 ** 15 - 1)) #normalize the data
     sliced_data = data[0:10 * sample_rate] #slice the data
@@ -138,7 +153,12 @@ def song(filename, output_name="out.wav"):  # todo: put in the notebook if I hav
     wavfile.write(output_name, sample_rate, values)
 
 
-def play_song(filename):  # todo: not need
+def play_song(filename):
+    """
+    # todo: not need
+    :param filename:
+    :return:
+    """
     sample_rate, data = wavfile.read(filename)
     chunk_size = sample_rate // 1000
     data = np.array(data[:, 0] / (2 ** 15 - 1))
