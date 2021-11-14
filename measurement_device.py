@@ -154,8 +154,40 @@ def play_song(filename):  # todo: not need
     with sd.OutputStream(sample_rate, chunk_size, channels=1, dtype="float32", callback=callback):
         sd.sleep(1000 * data.size // sample_rate)
 
-# if __name__ == '__main__':
-    # finding the connections of instruments
+def demodulate_am(signal: np.ndarray, rate: float, carrier_freq: float, band_radius: float = 40_000) -> np.ndarray:
+    """
+    demodulate amplitude modulation.
+    :param signal: the modulated signal.
+    :param rate: sample rate of the signal.
+    :param carrier_freq: The frequency of the carrier.
+    :param band_radius: The frequency limit of the modulated data.
+    :return: the data of the signal.
+    """
+    t = np.linspace(0, signal.size / rate, signal.size)
+    print(f"{len(t)=}")
+    carrier = np.cos(t * carrier_freq * 2 * np.pi)
+    return band_pass(signal * carrier, rate, 20, band_radius) * 4
+
+
+def band_pass(signal: np.ndarray, rate: float, low: float, high: float):
+    """
+    filter out all the frequencies that outside the given band.
+    :param signal: signal to filter.
+    :param rate: the sample rate of the signal.
+    :param low: the lower bound of the frequencies to pass.
+    :param high: the upper bound of the frequencies to pass.
+    :return: filtered signal.
+    """
+    sig_fft = fft.fft(signal)
+    freq = fft.fftfreq(sig_fft.size, 1 / rate)
+    abs_freq = np.abs(freq)
+
+    sig_fft[abs_freq > high] = 0
+    sig_fft[abs_freq < low] = 0
+
+    return fft.ifft(sig_fft)
+
+# finding the connections of instruments
 system = nidaqmx.system.System.local()
 for dev in system.devices:
     print(dev)
